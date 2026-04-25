@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; img-src 'self' https://openweathermap.org data:; style-src 'self' 'unsafe-inline'; script-src 'self'"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="widget" id="widget">
+      <header class="widget__header drag-region">
+        <span class="widget__title">Weather</span>
+        <div class="widget__header-actions no-drag">
+          <button
+            type="button"
+            class="icon-btn"
+            id="btn-edit-tags"
+            title="Edit city tags"
+            aria-label="Edit city tags"
+            aria-pressed="false"
+          >
+            ✎
+          </button>
+          <button type="button" class="icon-btn" id="btn-refresh" title="Refresh">
+            ↻
+          </button>
+          <button type="button" class="icon-btn" id="btn-settings" title="Settings">
+            ⚙
+          </button>
+        </div>
+      </header>
+      <nav class="city-tabs no-drag" id="city-tabs" aria-label="Tracked cities"></nav>
+
+      <main class="widget__main" id="view-main">
+        <p class="widget__error" id="error-msg" hidden></p>
+        <div class="widget__content" id="weather-content" hidden>
+          <div class="widget__location" id="location-line"></div>
+          <div class="widget__hero">
+            <img class="widget__icon" id="weather-icon" alt="" width="96" height="96" />
+            <div class="widget__temp-block">
+              <span class="widget__temp" id="temp"></span>
+              <span class="widget__unit" id="temp-unit">°C</span>
+            </div>
+          </div>
+          <p class="widget__desc" id="description"></p>
+          <p class="widget__feels" id="feels"></p>
+          <ul class="widget__meta">
+            <li><span class="label">Humidity</span> <span id="humidity"></span>%</li>
+            <li>
+              <span class="label">Wind</span> <span id="wind"></span>
+              <span id="wind-unit">m/s</span>
+            </li>
+          </ul>
+          <div class="widget__forecast" id="forecast" hidden></div>
+        </div>
+        <p class="widget__loading" id="loading-msg">Loading…</p>
+      </main>
+
+      <section class="widget__settings no-drag" id="view-settings" hidden>
+        <h2 class="widget__settings-title">Settings</h2>
+        <label class="widget__label" for="city-input">City</label>
+        <input
+          type="text"
+          id="city-input"
+          class="widget__input"
+          placeholder="e.g. Tokyo"
+          autocomplete="off"
+        />
+        <span class="widget__label">Temperature</span>
+        <div class="widget__radio-row" role="group" aria-label="Temperature unit">
+          <label class="widget__radio">
+            <input type="radio" name="temp-unit" value="celsius" checked />
+            Celsius (°C)
+          </label>
+          <label class="widget__radio">
+            <input type="radio" name="temp-unit" value="fahrenheit" />
+            Fahrenheit (°F)
+          </label>
+        </div>
+        <p class="widget__settings-error" id="settings-error" hidden></p>
+        <div class="widget__settings-actions">
+          <button type="button" class="btn btn--ghost" id="btn-cancel">Back</button>
+          <button type="button" class="btn btn--primary" id="btn-save">Save</button>
+        </div>
+      </section>
+    </div>
+    <script src="renderer.js"></script>
+  </body>
+</html>

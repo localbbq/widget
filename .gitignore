@@ -1,0 +1,12 @@
+node_modules/
+**/node_modules/
+
+# Environment secrets (all projects)
+.env
+**/.env
+.env.*
+**/.env.*
+!**/.env.example
+
+*.log
+.DS_Store

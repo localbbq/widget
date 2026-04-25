@@ -1,0 +1,18 @@
+{
+  "name": "stocks-widget",
+  "version": "1.0.0",
+  "description": "Floating desktop stocks widget (Electron)",
+  "type": "module",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^33.2.0"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "electron-store": "^10.0.0"
+  }
+}
