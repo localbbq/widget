@@ -5,16 +5,7 @@ This workspace now contains 3 separate Electron widget projects:
 - `weather-widget`: weather widget
 - `stocks-widget`: stocks widget
 - `sports-widget`: sports widget
-
-## Run each project
-
-Open a terminal in the specific project folder, then run:
-
-```bash
-npm install
-npm start
-```
-
+- 
 ## Quick step-by-step
 
 1. Obtain API key (OpenWeather for weather, Finnhub for stocks; sports needs none).
@@ -22,6 +13,7 @@ npm start
 3. Place API key in that widget's `.env` file.
 4. Run `npm install`.
 5. Run `npm start`.
+
 
 ## API keys 
 
