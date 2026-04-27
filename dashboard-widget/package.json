@@ -1,7 +1,7 @@
 {
-  "name": "stocks-widget",
+  "name": "dashboard-widget",
   "version": "1.0.0",
-  "description": "Floating desktop stocks widget (Electron)",
+  "description": "Unified draggable dashboard for weather, stocks, and sports widgets",
   "type": "module",
   "main": "src/main.js",
   "scripts": {

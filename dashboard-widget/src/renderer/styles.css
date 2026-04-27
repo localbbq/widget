@@ -7,25 +7,32 @@
 html,
 body {
   margin: 0;
+  width: 100%;
   height: 100%;
   font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   font-size: 14px;
   color: #e8eaed;
-  background: transparent;
+  background: radial-gradient(circle at 30% 20%, #1f2937 0%, #111827 45%, #020617 100%);
   overflow: hidden;
-  -webkit-font-smoothing: antialiased;
 }
 
-.drag-region {
-  -webkit-app-region: drag;
+.dashboard {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 
-.no-drag {
-  -webkit-app-region: no-drag;
+.widget-panel {
+  position: absolute;
+  width: 340px;
+  height: 720px;
+  touch-action: none;
 }
 
 .widget {
-  margin: 8px;
+  width: 100%;
+  height: 100%;
   border-radius: 16px;
   background: rgba(22, 24, 28, 0.92);
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -33,11 +40,16 @@ body {
     0 12px 28px -8px rgba(0, 0, 0, 0.45),
     0 4px 12px -4px rgba(0, 0, 0, 0.25);
   backdrop-filter: blur(12px);
-  min-height: 0;
-  height: calc(100vh - 16px);
-  max-height: calc(100vh - 16px);
   display: flex;
   flex-direction: column;
+}
+
+.widget-handle {
+  cursor: grab;
+}
+
+.widget-handle:active {
+  cursor: grabbing;
 }
 
 .widget__header {
@@ -54,84 +66,6 @@ body {
   padding: 8px 12px 10px;
   overflow-x: auto;
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-  scrollbar-width: thin;
-  scrollbar-color: rgba(148, 163, 184, 0.35) transparent;
-}
-
-.city-tab {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 10px;
-  padding: 4px 6px 4px 10px;
-  background: rgba(255, 255, 255, 0.04);
-  color: rgba(255, 255, 255, 0.86);
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.01em;
-  white-space: nowrap;
-  cursor: grab;
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08) inset;
-  transition:
-    background 150ms ease,
-    border-color 150ms ease,
-    transform 150ms ease,
-    box-shadow 150ms ease;
-}
-
-.city-tab:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.22);
-}
-
-.city-tab--active {
-  background: rgba(255, 255, 255, 0.14);
-  border-color: rgba(255, 255, 255, 0.32);
-  color: #fff;
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.16) inset;
-}
-
-.city-tab--dragging {
-  opacity: 0.6;
-  transform: scale(0.98);
-}
-
-.city-tab--drop-target {
-  border-color: rgba(255, 255, 255, 0.42);
-  background: rgba(255, 255, 255, 0.1);
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.18);
-}
-
-.city-tab__label {
-  border: none;
-  background: transparent;
-  color: inherit;
-  font: inherit;
-  cursor: pointer;
-  white-space: nowrap;
-  padding: 2px 0;
-}
-
-.city-tab__remove {
-  width: 20px;
-  height: 20px;
-  border: none;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.16);
-  color: inherit;
-  font-size: 14px;
-  line-height: 1;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 120ms ease, transform 120ms ease;
-}
-
-.city-tab__remove:hover {
-  background: rgba(255, 255, 255, 0.32);
-  transform: scale(1.05);
 }
 
 .widget__title {
@@ -157,9 +91,6 @@ body {
   font-size: 16px;
   line-height: 1;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .icon-btn:hover {
@@ -170,16 +101,63 @@ body {
   background: rgba(59, 130, 246, 0.26);
 }
 
-.icon-btn--active:hover {
-  background: rgba(59, 130, 246, 0.36);
+.city-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 10px;
+  padding: 4px 6px 4px 10px;
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.86);
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: grab;
+}
+
+.city-tab--active {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.32);
+  color: #fff;
+}
+
+.city-tab--dragging {
+  opacity: 0.6;
+  transform: scale(0.98);
+}
+
+.city-tab--drop-target {
+  border-color: rgba(255, 255, 255, 0.42);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.city-tab__label {
+  border: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  padding: 2px 0;
+}
+
+.city-tab__remove {
+  width: 20px;
+  height: 20px;
+  border: none;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.16);
+  color: inherit;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
 }
 
 .widget__main {
   flex: 1;
   min-height: 0;
   padding: 16px 18px 20px;
-  position: relative;
-  overflow-y: hidden;
+  overflow-y: auto;
 }
 
 .widget__error {
@@ -189,8 +167,6 @@ body {
   background: rgba(248, 81, 73, 0.15);
   border: 1px solid rgba(248, 81, 73, 0.35);
   color: #ffb4b0;
-  font-size: 13px;
-  line-height: 1.4;
 }
 
 .widget__loading {
@@ -244,7 +220,6 @@ body {
 
 .widget__desc {
   margin: 0 0 6px;
-  text-transform: capitalize;
   color: rgba(255, 255, 255, 0.75);
   font-size: 15px;
 }
@@ -298,15 +273,9 @@ body {
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.forecast-row:last-child {
-  border-bottom: none;
-  padding-bottom: 0;
-}
-
 .forecast-row__icon {
   width: 40px;
   height: 40px;
-  flex-shrink: 0;
   object-fit: contain;
 }
 
@@ -314,18 +283,64 @@ body {
   flex: 1;
   font-size: 13px;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.88);
 }
 
 .forecast-row__temps {
   font-size: 13px;
-  font-variant-numeric: tabular-nums;
   color: rgba(255, 255, 255, 0.55);
 }
 
 .forecast-row__temps .hi {
   color: #e8eaed;
   font-weight: 600;
+}
+
+.games-list {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 470px;
+  overflow-y: auto;
+  text-align: left;
+}
+
+.game-row {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 10px;
+}
+
+.game-row__logos {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.game-row__logo {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+}
+
+.game-row__matchup {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.game-row__score {
+  font-size: 18px;
+  color: #fff;
+  margin-bottom: 2px;
+}
+
+.game-row__status {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.55);
 }
 
 .widget__settings {
@@ -343,12 +358,10 @@ body {
 }
 
 .widget__label {
-  display: block;
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: rgba(255, 255, 255, 0.45);
-  margin-bottom: 2px;
 }
 
 .widget__input {
@@ -359,19 +372,11 @@ body {
   background: rgba(0, 0, 0, 0.25);
   color: #fff;
   font-size: 15px;
-  outline: none;
-  margin-bottom: 4px;
-}
-
-.widget__input:focus {
-  border-color: rgba(100, 160, 255, 0.5);
 }
 
 .widget__radio-row {
   display: grid;
   gap: 10px;
-  margin-top: 0;
-  margin-bottom: 2px;
 }
 
 .widget__radio {
@@ -380,12 +385,6 @@ body {
   gap: 10px;
   color: rgba(255, 255, 255, 0.84);
   font-size: 13px;
-  line-height: 1.35;
-  padding: 2px 0;
-}
-
-.widget__radio input {
-  accent-color: #3b82f6;
 }
 
 .widget__settings-error {
@@ -398,8 +397,6 @@ body {
   display: flex;
   justify-content: flex-end;
   gap: 8px;
-  margin-top: 4px;
-  padding-top: 6px;
 }
 
 .btn {
@@ -407,7 +404,6 @@ body {
   border-radius: 10px;
   border: none;
   font-size: 14px;
-  font-weight: 500;
   cursor: pointer;
 }
 
@@ -416,17 +412,17 @@ body {
   color: #e8eaed;
 }
 
-.btn--ghost:hover {
-  background: rgba(255, 255, 255, 0.14);
-}
-
 .btn--primary {
   background: #3b82f6;
   color: #fff;
 }
 
-.btn--primary:hover {
-  background: #2563eb;
+.trend-up {
+  color: #4ade80;
+}
+
+.trend-down {
+  color: #f87171;
 }
 
 [hidden] {

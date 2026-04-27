@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; img-src 'self' https://openweathermap.org https://a.espncdn.com https://*.espncdn.com data:; style-src 'self' 'unsafe-inline'; script-src 'self'"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Widget Dashboard</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="dashboard" id="dashboard">
+      <section class="widget-panel" id="weather-panel" data-widget="weather">
+        <div class="widget">
+          <header class="widget__header widget-handle">
+            <span class="widget__title">Weather</span>
+            <div class="widget__header-actions">
+              <button type="button" class="icon-btn" id="weather-btn-edit-tags">✎</button>
+              <button type="button" class="icon-btn" id="weather-btn-refresh">↻</button>
+              <button type="button" class="icon-btn" id="weather-btn-settings">⚙</button>
+            </div>
+          </header>
+          <nav class="city-tabs" id="weather-city-tabs" aria-label="Tracked cities"></nav>
+          <main class="widget__main" id="weather-view-main">
+            <p class="widget__error" id="weather-error-msg" hidden></p>
+            <div class="widget__content" id="weather-content" hidden>
+              <div class="widget__location" id="weather-location-line"></div>
+              <div class="widget__hero">
+                <img class="widget__icon" id="weather-icon" alt="" width="96" height="96" />
+                <div class="widget__temp-block">
+                  <span class="widget__temp" id="weather-temp"></span>
+                  <span class="widget__unit" id="weather-temp-unit">°C</span>
+                </div>
+              </div>
+              <p class="widget__desc" id="weather-description"></p>
+              <p class="widget__feels" id="weather-feels"></p>
+              <ul class="widget__meta">
+                <li><span class="label">Humidity</span> <span id="weather-humidity"></span>%</li>
+                <li>
+                  <span class="label">Wind</span> <span id="weather-wind"></span>
+                  <span id="weather-wind-unit">m/s</span>
+                </li>
+              </ul>
+              <div class="widget__forecast" id="weather-forecast" hidden></div>
+            </div>
+            <p class="widget__loading" id="weather-loading-msg">Loading...</p>
+          </main>
+          <section class="widget__settings" id="weather-view-settings" hidden>
+            <h2 class="widget__settings-title">Settings</h2>
+            <label class="widget__label" for="weather-city-input">City</label>
+            <input type="text" id="weather-city-input" class="widget__input" placeholder="e.g. Tokyo" autocomplete="off" />
+            <span class="widget__label">Temperature</span>
+            <div class="widget__radio-row" role="group" aria-label="Temperature unit">
+              <label class="widget__radio">
+                <input type="radio" name="weather-temp-unit" value="celsius" checked />
+                Celsius (°C)
+              </label>
+              <label class="widget__radio">
+                <input type="radio" name="weather-temp-unit" value="fahrenheit" />
+                Fahrenheit (°F)
+              </label>
+            </div>
+            <p class="widget__settings-error" id="weather-settings-error" hidden></p>
+            <div class="widget__settings-actions">
+              <button type="button" class="btn btn--ghost" id="weather-btn-cancel">Back</button>
+              <button type="button" class="btn btn--primary" id="weather-btn-save">Save</button>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section class="widget-panel" id="stocks-panel" data-widget="stocks">
+        <div class="widget">
+          <header class="widget__header widget-handle">
+            <span class="widget__title">Stocks</span>
+            <div class="widget__header-actions">
+              <button type="button" class="icon-btn" id="stocks-btn-edit" aria-pressed="false">✎</button>
+              <button type="button" class="icon-btn" id="stocks-btn-refresh">↻</button>
+              <button type="button" class="icon-btn" id="stocks-btn-settings">⚙</button>
+            </div>
+          </header>
+          <nav class="city-tabs" id="stocks-symbol-tabs"></nav>
+          <main class="widget__main" id="stocks-view-main">
+            <p class="widget__error" id="stocks-error-msg" hidden></p>
+            <div class="widget__content" id="stocks-content" hidden>
+              <div class="widget__location" id="stocks-symbol-name"></div>
+              <div class="widget__hero"><span class="widget__temp" id="stocks-price"></span></div>
+              <p class="widget__desc" id="stocks-change"></p>
+              <ul class="widget__meta">
+                <li><span class="label">Open</span> <span id="stocks-open"></span></li>
+                <li><span class="label">High</span> <span id="stocks-high"></span></li>
+                <li><span class="label">Low</span> <span id="stocks-low"></span></li>
+              </ul>
+            </div>
+            <p class="widget__loading" id="stocks-loading-msg">Loading...</p>
+          </main>
+          <section class="widget__settings" id="stocks-view-settings" hidden>
+            <h2 class="widget__settings-title">Settings</h2>
+            <label class="widget__label" for="stocks-symbol-input">Stock Symbol</label>
+            <input type="text" id="stocks-symbol-input" class="widget__input" placeholder="e.g. AAPL" autocomplete="off" />
+            <p class="widget__settings-error" id="stocks-settings-error" hidden></p>
+            <div class="widget__settings-actions">
+              <button type="button" class="btn btn--ghost" id="stocks-btn-cancel">Back</button>
+              <button type="button" class="btn btn--primary" id="stocks-btn-save">Save</button>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section class="widget-panel" id="sports-panel" data-widget="sports">
+        <div class="widget">
+          <header class="widget__header widget-handle">
+            <span class="widget__title" id="sports-league-title">Sports</span>
+            <div class="widget__header-actions">
+              <button type="button" class="icon-btn" id="sports-btn-refresh">↻</button>
+              <button type="button" class="icon-btn" id="sports-btn-settings">⚙</button>
+            </div>
+          </header>
+          <main class="widget__main" id="sports-view-main">
+            <p class="widget__error" id="sports-error-msg" hidden></p>
+            <div class="widget__content" id="sports-content" hidden>
+              <div class="widget__location" id="sports-games-heading">Current games</div>
+              <div class="games-list" id="sports-games-list"></div>
+            </div>
+            <p class="widget__loading" id="sports-loading-msg">Loading...</p>
+          </main>
+          <section class="widget__settings" id="sports-view-settings" hidden>
+            <h2 class="widget__settings-title">Settings</h2>
+            <label class="widget__label" for="sports-league-select">League</label>
+            <select id="sports-league-select" class="widget__input">
+              <option value="nba">NBA</option>
+              <option value="nfl">NFL</option>
+              <option value="mlb">MLB</option>
+              <option value="nhl">NHL</option>
+            </select>
+            <p class="widget__settings-error" id="sports-settings-error" hidden></p>
+            <div class="widget__settings-actions">
+              <button type="button" class="btn btn--ghost" id="sports-btn-cancel">Back</button>
+              <button type="button" class="btn btn--primary" id="sports-btn-save">Save</button>
+            </div>
+          </section>
+        </div>
+      </section>
+    </div>
+    <script src="renderer.js"></script>
+  </body>
+</html>
